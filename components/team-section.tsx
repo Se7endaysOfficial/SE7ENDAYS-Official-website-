@@ -2,16 +2,16 @@ import Image from "next/image"
 
 const team = [
   {
-    name: "Mike",
-    role: "Founder & Lead Developer",
-    image: "/images/mike.png",
-    delay: "0s",
-  },
-  {
     name: "Barry",
     role: "Senior Developer",
     image: "/images/barry.png",
     delay: "0.1s",
+  },
+  {
+    name: "Mike",
+    role: "Founder & Lead Developer",
+    image: "/images/mike.png",
+    delay: "0s",
   },
   {
     name: "Ninezy",
