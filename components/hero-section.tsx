@@ -3,12 +3,12 @@ import Link from "next/link"
 export function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center px-5 md:px-16 pt-24 md:pt-36 pb-15 bg-[#1a1a1a] relative overflow-hidden">
-      {/* Background Image */}
+      {}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{ backgroundImage: "url('/images/hero-bg.png')" }}
       />
-      {/* Overlay */}
+      {}
       <div className="absolute inset-0 bg-gradient-to-b from-[rgba(26,26,26,0.5)] to-[rgba(26,26,26,0.7)] z-[1]" />
 
       <div className="max-w-[1200px] w-full mx-auto text-center relative z-[2] animate-fade-in-up">
