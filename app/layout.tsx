@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: {
-    default: 'SE7ENDAYS Official',
+    default: 'SE7ENDAYS Studio',
     template: '%s | SE7ENDAYS',
   },
   description: 'Professional Minecraft Bedrock Edition development studio specializing in advanced add-ons and cinematic experiences.',
