@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
+import { LoginModal } from "@/components/login-modal"
+import { createClient } from "@/lib/supabase/client"
 
 const projects = [
   {
@@ -40,8 +42,28 @@ const team = [
 export default function Home() {
   const [scrolled, setScrolled] = useState(false)
   const [animatedStats, setAnimatedStats] = useState<number[]>([0, 0, 0, 0])
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const statsRef = useRef<HTMLElement>(null)
   const hasAnimated = useRef(false)
+
+  useEffect(() => {
+    // Check if user is logged in via Supabase
+    const checkAuth = async () => {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      setIsLoggedIn(!!user)
+    }
+    checkAuth()
+
+    // Listen for auth state changes
+    const supabase = createClient()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session?.user)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,6 +117,11 @@ export default function Home() {
 
   return (
     <>
+      <LoginModal 
+        open={loginModalOpen} 
+        onOpenChange={setLoginModalOpen} 
+        onLoginSuccess={() => setIsLoggedIn(true)}
+      />
       <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
         <div className="nav-inner">
           <a href="#top" className="logo" draggable={false}>
@@ -118,6 +145,18 @@ export default function Home() {
             <a href="#contact" className="nav-link" draggable={false}>
               Contact
             </a>
+            {isLoggedIn ? (
+              <a href="/tools" className="nav-link nav-tools">
+                Tools
+              </a>
+            ) : (
+              <button 
+                onClick={() => setLoginModalOpen(true)} 
+                className="nav-link nav-login"
+              >
+                Team Login
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -268,8 +307,6 @@ export default function Home() {
                   href="mailto:se7endays.official@gmail.com"
                   className="social-link"
                   aria-label="Email"
-                  target="_blank"
-                  rel="noopener noreferrer"
                   draggable={false}
                 >
                   <svg className="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
