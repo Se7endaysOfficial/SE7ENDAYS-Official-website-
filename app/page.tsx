@@ -48,6 +48,11 @@ export default function Home() {
   const hasAnimated = useRef(false)
 
   useEffect(() => {
+    // Skip auth check if Supabase env vars are not configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return
+    }
+
     // Check if user is logged in via Supabase
     const checkAuth = async () => {
       const supabase = createClient()
