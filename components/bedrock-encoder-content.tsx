@@ -5,11 +5,15 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import JSZip from "jszip"
 
 export function BedrockEncoderContent() {
   const [scrolled, setScrolled] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [isChecking, setIsChecking] = useState(true)
+  const router = useRouter()
   const [packType, setPackType] = useState<"behavior" | "resource">("behavior")
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
@@ -20,12 +24,32 @@ export function BedrockEncoderContent() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    // Check if user is logged in via localStorage
+    const loggedIn = localStorage.getItem("team_logged_in") === "true"
+    if (!loggedIn) {
+      router.push("/")
+      return
+    }
+    setIsAuthorized(true)
+    setIsChecking(false)
+  }, [router])
+
+  useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Show loading while checking auth
+  if (isChecking || !isAuthorized) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-zinc-300 border-t-zinc-800 rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   const handleFileSelect = (file: File) => {
     if (file.name.endsWith(".zip")) {

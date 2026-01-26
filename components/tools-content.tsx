@@ -1,9 +1,9 @@
 "use client"
 
-import type { User } from "@supabase/supabase-js"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Package, Code, MessageSquareOff, Lock } from "lucide-react"
 
 const tools = [
@@ -33,13 +33,22 @@ const tools = [
   },
 ]
 
-interface ToolsContentProps {
-  user: User
-  role: string
-}
-
-export function ToolsContent({ user, role }: ToolsContentProps) {
+export function ToolsContent() {
   const [scrolled, setScrolled] = useState(false)
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [isChecking, setIsChecking] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check if user is logged in via localStorage
+    const loggedIn = localStorage.getItem("team_logged_in") === "true"
+    if (!loggedIn) {
+      router.push("/")
+      return
+    }
+    setIsAuthorized(true)
+    setIsChecking(false)
+  }, [router])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +57,15 @@ export function ToolsContent({ user, role }: ToolsContentProps) {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Show loading while checking auth
+  if (isChecking || !isAuthorized) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-zinc-300 border-t-zinc-800 rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <div className="tools-page">
