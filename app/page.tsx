@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { LoginModal } from "@/components/login-modal"
 
 const projects = [
   {
@@ -41,16 +40,8 @@ const team = [
 export default function Home() {
   const [scrolled, setScrolled] = useState(false)
   const [animatedStats, setAnimatedStats] = useState<number[]>([0, 0, 0, 0])
-  const [loginModalOpen, setLoginModalOpen] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const statsRef = useRef<HTMLElement>(null)
   const hasAnimated = useRef(false)
-
-  useEffect(() => {
-    // Check if user is logged in via localStorage
-    const loggedIn = localStorage.getItem("team_logged_in") === "true"
-    setIsLoggedIn(loggedIn)
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,11 +95,6 @@ export default function Home() {
 
   return (
     <>
-      <LoginModal 
-        open={loginModalOpen} 
-        onOpenChange={setLoginModalOpen} 
-        onLoginSuccess={() => setIsLoggedIn(true)}
-      />
       <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
         <div className="nav-inner">
           <a href="#top" className="logo" draggable={false}>
@@ -132,29 +118,6 @@ export default function Home() {
             <a href="#contact" className="nav-link" draggable={false}>
               Contact
             </a>
-            {isLoggedIn ? (
-              <>
-                <a href="/tools" className="nav-link">
-                  Tools
-                </a>
-                <button 
-                  onClick={() => {
-                    localStorage.removeItem("team_logged_in")
-                    setIsLoggedIn(false)
-                  }} 
-                  className="nav-link nav-logout"
-                >
-                  Log Out
-                </button>
-              </>
-            ) : (
-              <button 
-                onClick={() => setLoginModalOpen(true)} 
-                className="nav-link nav-login"
-              >
-                Team Login
-              </button>
-            )}
           </div>
         </div>
       </nav>
@@ -305,6 +268,8 @@ export default function Home() {
                   href="mailto:se7endays.official@gmail.com"
                   className="social-link"
                   aria-label="Email"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   draggable={false}
                 >
                   <svg className="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -337,7 +302,7 @@ export default function Home() {
                   draggable={false}
                 >
                   <svg className="social-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                   </svg>
                 </a>
                 <a
