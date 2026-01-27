@@ -267,21 +267,20 @@ a {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.nav-tools {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.nav-logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s;
 }
 
-.nav-tools::before {
-  display: none;
-}
-
-.nav-tools:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+.nav-logout:hover {
+  color: #fff;
 }
 
 /* Light navigation for tool pages */

@@ -133,9 +133,20 @@ export default function Home() {
               Contact
             </a>
             {isLoggedIn ? (
-              <a href="/tools" className="nav-link nav-tools">
-                Tools
-              </a>
+              <>
+                <a href="/tools" className="nav-link">
+                  Tools
+                </a>
+                <button 
+                  onClick={() => {
+                    localStorage.removeItem("team_logged_in")
+                    setIsLoggedIn(false)
+                  }} 
+                  className="nav-link nav-logout"
+                >
+                  Log Out
+                </button>
+              </>
             ) : (
               <button 
                 onClick={() => setLoginModalOpen(true)} 

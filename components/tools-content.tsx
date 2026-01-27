@@ -39,6 +39,11 @@ export function ToolsContent() {
   const [isChecking, setIsChecking] = useState(true)
   const router = useRouter()
 
+  const handleLogout = () => {
+    localStorage.removeItem("team_logged_in")
+    router.push("/")
+  }
+
   useEffect(() => {
     // Check if user is logged in via localStorage
     const loggedIn = localStorage.getItem("team_logged_in") === "true"
@@ -92,9 +97,12 @@ export function ToolsContent() {
             <Link href="/#contact" className="nav-link" draggable={false}>
               Contact
             </Link>
-            <Link href="/tools" className="nav-link nav-tools">
+            <Link href="/tools" className="nav-link">
               Tools
             </Link>
+            <button onClick={handleLogout} className="nav-link nav-logout">
+              Log Out
+            </button>
           </div>
         </div>
       </nav>
