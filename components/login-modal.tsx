@@ -50,6 +50,9 @@ export function LoginModal({ open, onOpenChange, onLoginSuccess }: LoginModalPro
     }
   }
 
+  const inputClass = "w-full bg-[#27272a] border border-[#3f3f46] text-white placeholder-zinc-500 h-12 rounded-xl pl-12 pr-4 text-[15px] focus:outline-none focus:border-zinc-500 transition-colors"
+  const iconClass = "absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 pointer-events-none"
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[440px] w-[calc(100vw-2rem)] bg-[#18181b] border-[#27272a] p-0 gap-0 rounded-2xl overflow-hidden">
@@ -70,25 +73,25 @@ export function LoginModal({ open, onOpenChange, onLoginSuccess }: LoginModalPro
           
           <form onSubmit={handleLogin} className="space-y-5">
             <div className="relative">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 pointer-events-none" />
+              <User className={iconClass} />
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
-                className="w-full bg-[#27272a] border border-[#3f3f46] text-white placeholder-zinc-500 h-12 rounded-xl pl-12 pr-4 text-[15px] focus:outline-none focus:border-zinc-500 transition-colors"
+                className={inputClass}
                 required
               />
             </div>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500 pointer-events-none" />
+              <Lock className={iconClass} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                className="w-full bg-[#27272a] border border-[#3f3f46] text-white placeholder-zinc-500 h-12 rounded-xl pl-12 pr-4 text-[15px] focus:outline-none focus:border-zinc-500 transition-colors"
+                className={inputClass}
                 required
               />
             </div>
